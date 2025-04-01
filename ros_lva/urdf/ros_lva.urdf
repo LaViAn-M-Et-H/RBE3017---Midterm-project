@@ -5,7 +5,8 @@
 <robot
   name="ros_lva">
   
-  <link name="dummy_root_link"/>
+  <link name="dummy_root_link">
+  </link>
 
   <joint name="dummy_joint" type="fixed">
   <parent link="dummy_root_link"/>
