@@ -39,6 +39,10 @@ Chạy hiển thị đồng thời trên cả Gazebo và RViz
 ```bash
 roslaunch ros_lva gazebo.launch
 ```
+![Gazebo](./Gazebo.png)
+
+![RViz](./RViz.png)
+
 Điều khiển robot bằng bàn phím:
 - w: Robot di chuyển thẳng
 - a: Robot quay trái
