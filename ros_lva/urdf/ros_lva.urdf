@@ -554,7 +554,7 @@
   </gazebo>
   
   <gazebo>
-  <plugin name="differential_drive_controller_22" filename="libgazebo_ros_diff_drive.so">
+  <plugin name="differential_drive_controller_2" filename="libgazebo_ros_diff_drive.so">
     <leftJoint>motor_2_joint</leftJoint>   
     <rightJoint>motor_1_joint</rightJoint> 
     
