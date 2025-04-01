@@ -25,7 +25,14 @@ cd catkin_ws
 catkin_make
 source devel/setup.bash
 ```
-
+Đảm bảo tạo quyền truy cập cho các file trong thư mục scripts
+```bash
+chmod +x arm_teleop.py
+chmod +x teleop_wasd.py
+chmod +x lidar_processor.py
+chmod +x imu_processor.py
+chmod +x encoder_processor.py
+```
 ## 2. Khởi chạy mô phỏng và điều khiển
 Chạy hiển thị đồng thời trên cả Gazebo và RViz
 
