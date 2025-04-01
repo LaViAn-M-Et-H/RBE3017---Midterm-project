@@ -32,4 +32,22 @@ Chạy hiển thị đồng thời trên cả Gazebo và RViz
 ```bash
 roslaunch ros_lva gazebo.launch
 ```
+Điều khiển robot bằng bàn phím:
+- w: Robot di chuyển thẳng
+- a: Robot quay trái
+- s: Robot đi lùi
+- d: Robot quay phải
+- u: Tăng góc khớp quay tay máy
+- i: Giảm góc khớp quay tay máy
+- o: Tăng độ dịch chuyển khớp tịnh tiến tay máy
+- p: Giảm độ dịch chuyển khớp tịnh tiến tay máy
+- x: Hủy điều khiển xe
+- y: Hủy điều khiển tay máy
+  
+## 3. Đọc riêng các giá trị cảm biến
+```bash
+rostopic echo /scan
+rostopic echo /imu/data
+rostopic echo /joint_states
+```
 
