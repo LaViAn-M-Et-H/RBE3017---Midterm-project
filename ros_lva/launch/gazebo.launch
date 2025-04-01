@@ -17,6 +17,8 @@
     <arg name="world_name" value="$(find ros_lva)/worlds/custom.world"/>
   </include>
 
+  <include file="$(find ros_lva)/launch/display.launch"/>
+
   <!-- Tải URDF -->
   <param name="robot_description" textfile="$(find ros_lva)/urdf/ros_lva.urdf" />
 
