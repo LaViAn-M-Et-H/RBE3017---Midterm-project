@@ -33,6 +33,13 @@ chmod +x lidar_processor.py
 chmod +x imu_processor.py
 chmod +x encoder_processor.py
 ```
+
+Cài đặt bổ sung các package nếu chưa có
+
+```bash
+chmod +x install_dependencies.sh
+./install_dependencies.sh
+```
 ## 2. Khởi chạy mô phỏng và điều khiển
 Chạy hiển thị đồng thời trên cả Gazebo và RViz
 
