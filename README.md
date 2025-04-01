@@ -39,7 +39,7 @@ Chạy hiển thị đồng thời trên cả Gazebo và RViz
 ```bash
 roslaunch ros_lva gazebo.launch
 ```
-![Gazebo](./Gazebo.png)
+![Gazebo]([./Gazebo.png](https://github.com/LaViAn-M-Et-H/RBE3017---Midterm-project/blob/main/Gazebo.PNG))
 
 ![RViz](./RViz.png)
 
