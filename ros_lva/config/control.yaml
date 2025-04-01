@@ -1,0 +1,58 @@
+controller_manager:
+  ros:
+    auto_start: true
+    update_rate: 50
+
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+  joints:
+    - motor_1_joint
+    - motor_2_joint
+    - motor_3_joint
+    - motor_4_joint
+    - arm_1_joint
+    - arm_2_joint
+
+diff_drive_controller_1:
+  type: "diff_drive_controller_1/DiffDriveController"
+  left_wheel: 'motor_4_joint'
+  right_wheel: 'motor_3_joint'
+  wheel_separation: 0.266137
+  wheel_radius: 0.0426
+  cmd_vel_topic: cmd_vel
+  odom_topic: odom
+  publish_rate: 50
+  base_frame_id: base_link
+  odom_frame_id: odom
+  enable_odom_tf: true
+
+diff_drive_controller_2:
+  type: "diff_drive_controller_2/DiffDriveController"
+  left_wheel: 'motor_2_joint'
+  right_wheel: 'motor_1_joint'
+  wheel_separation: 0.260605
+  wheel_radius: 0.04
+  cmd_vel_topic: cmd_vel
+  odom_topic: odom
+  publish_rate: 50
+  base_frame_id: base_link
+  odom_frame_id: odom
+  enable_odom_tf: true
+
+arm_1_controller:
+  type: position_controllers/JointPositionController
+  joint: arm_1_joint
+
+arm_2_controller:
+  type: position_controllers/JointPositionController
+  joint: arm_2_joint
+  
+gazebo_ros_control:
+  pid_gains:
+    motor_1_joint: {p: 100.0, i: 10.0, d: 1.0}
+    motor_2_joint: {p: 100.0, i: 10.0, d: 1.0}
+    motor_3_joint: {p: 100.0, i: 10.0, d: 1.0}
+    motor_4_joint: {p: 100.0, i: 10.0, d: 1.0}
+    arm_1_joint: {p: 1.0, i: 0.1, d: 0.01}
+    arm_2_joint: {p: 1.0, i: 0.1, d: 0.01}

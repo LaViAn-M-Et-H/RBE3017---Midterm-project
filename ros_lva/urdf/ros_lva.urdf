@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="ros_lva">
+  
+  <link name="dummy_root_link"/>
+
+  <joint name="dummy_joint" type="fixed">
+  <parent link="dummy_root_link"/>
+  <child link="base_link"/>
+  <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.00959630430752534 -4.59753131624718E-05 0.0914512861464635"
+        rpy="0 0 0" />
+      <mass
+        value="2.09964115614805" />
+      <inertia
+        ixx="0.019201784582518"
+        ixy="-4.29296488428788E-07"
+        ixz="-0.00346486881609445"
+        iyy="0.0272604310157993"
+        iyz="-6.56054217370797E-13"
+        izz="0.0142151743467295" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.964705882352941 0.964705882352941 0.952941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ========== SENSORS ========== -->
+  
+  <!-- LiDAR Sensor -->
+  <link name="lidar_link">
+    <inertial>
+      <mass value="0.1" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.05"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 0.8 0.5"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.05" radius="0.05"/>
+      </geometry>
+    </collision>
+  </link>
+
+<gazebo reference="lidar_link">
+  <sensor type="ray" name="lidar_sensor">
+    <pose>0 0 0 0 0 0</pose>
+    <visualize>true</visualize>
+    <update_rate>50</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>360</samples>
+          <resolution>1</resolution>
+          <min_angle>-3.14</min_angle>
+          <max_angle>3.14</max_angle>
+        </horizontal>
+      </scan>
+      <range>
+        <min>0.1</min>
+        <max>10.0</max>
+        <resolution>0.01</resolution>
+      </range>
+    </ray>
+    <plugin name="lidar_controller" filename="libgazebo_ros_laser.so">
+      <topicName>/scan</topicName>
+      <frameName>lidar_link</frameName>
+    </plugin>
+  </sensor>
+</gazebo>
+  
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+    <origin xyz="0 0 0.3" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- IMU Sensor -->
+  <link name="imu_link">
+    <inertial>
+      <mass value="0.01" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="0.02 0.02 0.005"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 0.8 0 0.5"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.02 0.02 0.005"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  <gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>50</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>5.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+
+  <!-- ========== END OF SENSORS ========== -->
+
+  <!-- Original robot links and joints follow -->
+  <link
+    name="motor_1_link">
+    <inertial>
+      <origin
+        xyz="-2.88657986402541E-15 -1.84852133600089E-14 0.0150000000000159"
+        rpy="0 0 0" />
+      <mass
+        value="0.150319317988046" />
+      <inertia
+        ixx="7.15919239311505E-05"
+        ixy="-8.76531980780818E-21"
+        ixz="5.66270605179704E-20"
+        iyy="7.15919239311505E-05"
+        iyz="7.79270311473959E-20"
+        izz="0.000120635950164094" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/motor_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.152941176470588 0.152941176470588 0.152941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/motor_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="motor_1_joint"
+    type="continuous">
+    <origin
+      xyz="0.134178914960515 -0.131259427651041 0.0325000001862693"
+      rpy="1.64138135453709 -1.5707963267949 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="motor_1_link" />
+    <axis
+      xyz="0 0 1" />
+    <initial_velocity>0</initial_velocity>
+    <limit effort="100" velocity="100"/>
+  </joint>
+
+  <link
+    name="motor_2_link">
+    <inertial>
+      <origin
+        xyz="-2.77555756156289E-16 9.43689570931383E-15 0.0100000000000077"
+        rpy="0 0 0" />
+      <mass
+        value="0.100212878658698" />
+      <inertia
+        ixx="4.35524126766547E-05"
+        ixy="-6.64093340920902E-23"
+        ixz="5.37841223641712E-20"
+        iyy="4.35524126766547E-05"
+        iyz="-7.83505476210225E-21"
+        izz="8.04239667760629E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/motor_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.152941176470588 0.152941176470588 0.152941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/motor_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="motor_2_joint"
+    type="continuous">
+    <origin
+      xyz="0.135220633411976 0.131319122866016 0.0325000000000013"
+      rpy="1.6152949297173 -1.57079631189374 3.14159265358979" />
+    <parent
+      link="base_link" />
+    <child
+      link="motor_2_link" />
+    <axis
+      xyz="0 0 1" />
+    <initial_velocity>0</initial_velocity>
+    <limit effort="100" velocity="100"/>
+  </joint>
+  
+  <link
+    name="motor_3_link">
+    <inertial>
+      <origin
+        xyz="-2.77555756156289E-16 -0.0175534607279839 -5.55111512312578E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.194786013053384" />
+      <inertia
+        ixx="0.000106735850189812"
+        ixy="4.75890786848443E-20"
+        ixz="-4.43078487320501E-21"
+        iyy="0.000173530446096348"
+        iyz="-1.16965486592598E-20"
+        izz="0.000106735850189812" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/motor_3_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.152941176470588 0.152941176470588 0.152941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/motor_3_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="motor_3_joint"
+    type="continuous">
+    <origin
+      xyz="-0.137000002041459 -0.134779185286445 0.035000000223518"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="motor_3_link" />
+    <axis
+      xyz="0 1 0" />
+    <initial_velocity>0</initial_velocity>
+    <limit effort="100" velocity="100"/>
+  </joint>
+  
+  <link
+    name="motor_4_link">
+    <inertial>
+      <origin
+        xyz="4.71844785465692E-16 -2.22044604925031E-16 0.0175490498963177"
+        rpy="0 0 0" />
+      <mass
+        value="0.195157920670944" />
+      <inertia
+        ixx="0.000107096548277091"
+        ixy="-3.71313622156512E-22"
+        ixz="-6.5501937985983E-22"
+        iyy="0.000107096548277091"
+        iyz="-1.92720844967161E-20"
+        izz="0.000174189752212176" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/motor_4_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.152941176470588 0.152941176470588 0.152941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/motor_4_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="motor_4_joint"
+    type="continuous">
+    <origin
+      xyz="-0.137000002041459 0.129779185286445 0.0350000002235178"
+      rpy="-1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="motor_4_link" />
+    <axis
+      xyz="0 0 1" />
+    <initial_velocity>0</initial_velocity>
+    <limit effort="100" velocity="100"/>
+  </joint>
+  
+  <link
+    name="arm_1_link">
+    <inertial>
+      <origin
+        xyz="0.0314127322588624 0.00290972363297182 -0.02"
+        rpy="0 0 0" />
+      <mass
+        value="0.0634955445899674" />
+      <inertia
+        ixx="1.38385780420671E-05"
+        ixy="-5.57615280414192E-06"
+        ixz="-5.54899997030101E-21"
+        iyy="8.10969916175943E-05"
+        iyz="2.15970945062943E-21"
+        izz="8.95775997945737E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/arm_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.964705882352941 0.964705882352941 0.952941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/arm_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_1_joint"
+    type="revolute">
+    <origin
+      xyz="0.175 0.02 0.295"
+      rpy="-1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="arm_1_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit lower="-3.14159" upper="3.14159" effort="100" velocity="10" />
+    <initial_position>0.0</initial_position>
+    <dynamics damping="0.1" friction="0.5"/>
+  </joint>
+  <link
+    name="arm_2_link">
+    <inertial>
+      <origin
+        xyz="1.11022302462516E-16 -0.00700000000000003 -2.22044604925031E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.0317267253948186" />
+      <inertia
+        ixx="2.42025358991646E-05"
+        ixy="-8.29824132164272E-23"
+        ixz="-3.77194359324181E-21"
+        iyy="2.51692148319294E-05"
+        iyz="2.91118549626734E-22"
+        izz="2.00308529566217E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/arm_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.964705882352941 0.964705882352941 0.952941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_lva/meshes/arm_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_2_joint"
+    type="prismatic">
+    <origin
+      xyz="0.0646557908940664 0.00363864195729879 -0.013499999895692"
+      rpy="1.5707963267949 0 1.64245689139526" />
+    <parent
+      link="arm_1_link" />
+    <child
+      link="arm_2_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit lower="0" upper="0.07" effort="100" velocity="10" />
+    <initial_position>0.0</initial_position>
+    <dynamics damping="0.1" friction="0.5"/>
+  </joint>
+  
+  <!-- ========== ROS CONTROL ========== -->
+  
+  <gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
+  </gazebo>
+
+  <!-- Arm 1 -->
+  <transmission name="arm_1_trans">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="arm_1_joint">
+    <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="arm_1_motor">
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  </transmission>
+
+  <!-- Arm 2 -->
+  <transmission name="arm_2_trans">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="arm_2_joint">
+    <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="arm_2_motor">
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  </transmission>
+ 
+  <gazebo>
+  <plugin name="differential_drive_controller_1" filename="libgazebo_ros_diff_drive.so">
+    <leftJoint>motor_4_joint</leftJoint>   
+    <rightJoint>motor_3_joint</rightJoint> 
+    
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <odometrySource>world</odometrySource>
+    <publishOdomTF>true</publishOdomTF>
+    <publishWheelTF>false</publishWheelTF>
+    <publishTf>true</publishTf>
+    <publishWheelJointState>true</publishWheelJointState>
+    <legacyMode>false</legacyMode>
+    <updateRate>50</updateRate>
+    <wheelSeparation>0.266137</wheelSeparation>
+    <wheelDiameter>0.0852</wheelDiameter>
+    <robotBaseFrame>base_link</robotBaseFrame>
+    <wheelAcceleration>1</wheelAcceleration>
+    <wheelTorque>10</wheelTorque>
+    <rosDebugLevel>na</rosDebugLevel>        
+  </plugin>
+  </gazebo>
+  
+  <gazebo>
+  <plugin name="differential_drive_controller_22" filename="libgazebo_ros_diff_drive.so">
+    <leftJoint>motor_2_joint</leftJoint>   
+    <rightJoint>motor_1_joint</rightJoint> 
+    
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <odometrySource>world</odometrySource>
+    <publishOdomTF>true</publishOdomTF>
+    <publishWheelTF>false</publishWheelTF>
+    <publishTf>true</publishTf>
+    <publishWheelJointState>true</publishWheelJointState>
+    <legacyMode>false</legacyMode>
+    <updateRate>50</updateRate>
+    <wheelSeparation>0.260605</wheelSeparation>
+    <wheelDiameter>0.08</wheelDiameter>
+    <robotBaseFrame>base_link</robotBaseFrame>
+    <wheelAcceleration>1</wheelAcceleration>
+    <wheelTorque>10</wheelTorque>
+    <rosDebugLevel>na</rosDebugLevel>         
+  </plugin>
+  </gazebo>
+  
+</robot>

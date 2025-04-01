@@ -1,0 +1,65 @@
+<launch>
+  <!-- Các tham số Gazebo -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="enable_keyboard" default="true"/>
+
+  <!-- Khởi chạy Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="world_name" value="$(find ros_lva)/worlds/custom.world"/>
+  </include>
+
+  <!-- Tải URDF -->
+  <param name="robot_description" textfile="$(find ros_lva)/urdf/ros_lva.urdf" />
+
+  <!-- Spawn robot -->
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+        args="-urdf -param robot_description -model ros_lva -x 0 -y 0 -z 0"
+        output="screen" />
+
+  <!-- Tải các bộ điều khiển -->
+  <rosparam file="$(find ros_lva)/config/control.yaml" command="load"/>
+
+  <!-- Khởi chạy controller manager -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" 
+        args="joint_state_controller
+              diff_drive_controller
+              arm_1_controller
+              arm_2_controller"
+        output="screen"
+        launch-prefix="bash -c 'sleep 5; $0 $@' "/>
+   
+  <!-- Node teleop -->     
+  <node name="teleop_wasd_keyboard" pkg="ros_lva" type="teleop_wasd.py" output="screen">
+    <remap from="cmd_vel" to="/cmd_vel"/>
+  </node>
+
+  <!-- Node điều khiển cánh tay -->
+  <node name="arm_teleop_keyboard" pkg="ros_lva" type="arm_teleop.py" output="screen" if="$(arg enable_keyboard)"/>
+  
+  <!-- Robot State Publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" 
+        type="robot_state_publisher" respawn="false" output="screen"/>
+
+  <!-- Các node xử lý cảm biến -->
+  <node name="lidar_processor" pkg="ros_lva" type="lidar_processor.py" output="screen">
+    <remap from="scan" to="/scan"/>
+  </node>
+
+  <node name="imu_processor" pkg="ros_lva" type="imu_processor.py" output="screen">
+    <remap from="imu_data" to="/imu/data"/>
+  </node>
+  
+  <node name="encoder_processor" pkg="ros_lva" type="encoder_processor.py" output="screen">
+    <remap from="encoder_1" to="/joint_states"/>
+  </node>
+
+</launch>

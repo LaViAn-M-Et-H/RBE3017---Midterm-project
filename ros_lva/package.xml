@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>ros_lva</name>
+  <version>1.0.0</version>
+  <description>
+    <p>URDF Description package for ros_lva</p>
+    <p>This package contains configuration data, 3D models and launch files
+for ros_lva robot</p>
+  </description>
+  <author>TODO</author>
+  <maintainer email="TODO@email.com" />
+  <license>BSD</license>
+
+  <!-- Build tool -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Các dependency hiện có -->
+  <depend>roslaunch</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>rviz</depend>
+  <depend>joint_state_publisher_gui</depend>
+  <depend>gazebo</depend>
+
+  <!-- Các dependency bổ sung -->
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>gazebo_ros</depend>
+  <depend>controller_manager</depend>
+  <depend>joint_state_controller</depend>
+  <depend>position_controllers</depend>
+  <depend>tf</depend>
+  <depend>rospy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>effort_controllers</depend>
+  <depend>urdf</depend>
+  
+  <export>
+    <architecture_independent />
+  </export>
+</package>
