@@ -20,15 +20,16 @@ Thiết kế một robot AGV gồm có xe và tay máy. Xe được điều khi�
 # Hướng dẫn sử dụng
 
 ## 1. Tạo package và source về nguồn
-'''bash
+```bash
 cd catkin_ws
 catkin_make
 source devel/setup.bash
-'''
+```
 
 ## 2. Khởi chạy mô phỏng và điều khiển
-Chạy hiển thị đồng thời cả Gazebo và RViz
-'''bash
+Chạy hiển thị đồng thời trên cả Gazebo và RViz
+
+```bash
 roslaunch ros_lva gazebo.launch
-'''
+```
 
